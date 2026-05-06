@@ -123,7 +123,7 @@ A BãoDaFeira acredita que um sistema alimentar mais saudável começa quando o 
 
 ---
 
-Feito com ♥ para a **agricultura familiar brasileira**
+Feito para a **agricultura familiar brasileira**
 
 *Conectando o campo à sua mesa — direto, fresco e justo.*
 

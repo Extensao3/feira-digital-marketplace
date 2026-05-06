@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BãoDaFeira – Compre direto do produtor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+ 
+</head>
+
+<body>
+
+  <!-- Skip to content (acessibilidade teclado) -->
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <!-- ===================================================
+     GLOBAL NAVBAR
+=================================================== -->
+  <nav class="navbar" id="global-navbar">
+    <div class="navbar-inner">
+      <div class="navbar-logo" onclick="showScreen('landing')">
+        <!-- Leaf SVG -->
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 3C14 3 5 8 5 16C5 20.418 8.582 24 13 24C13.34 24 13.672 23.977 14 23.934V3Z" fill="#66BB6A" />
+          <path d="M14 3C14 3 23 8 23 16C23 20.418 19.418 24 15 24C14.66 24 14.328 23.977 14 23.934V3Z"
+            fill="#2E7D32" />
+          <path d="M14 14L14 26" stroke="#2E7D32" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+        BãoDaFeira
+      </div>
+      <nav class="navbar-links">
+        <a onclick="showScreen('landing')" data-screen="landing">Início</a>
+        <a onclick="showScreen('products')" data-screen="products">Produtos</a>
+        <a
+          onclick="showScreen('landing'); setTimeout(()=>document.getElementById('how-section').scrollIntoView({behavior:'smooth'}),200)">Como
+          Funciona</a>
+      </nav>
+      <div class="navbar-spacer"></div>
+      <div class="navbar-actions">
+        <button class="btn btn-ghost" onclick="showScreen('register')">Entrar</button>
+        <button class="btn btn-primary" onclick="showScreen('register')">Cadastrar</button>
+      </div>
+      <!-- Ícone do carrinho -->
+      <button class="cart-nav-btn" id="cart-nav-btn" onclick="openCart()" aria-label="Abrir carrinho de compras">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge" id="cart-badge" style="display:none;">0</span>
+      </button>
+      <button class="hamburger" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a onclick="showScreen('landing'); closeMobileMenu()">Início</a>
+    <a onclick="showScreen('products'); closeMobileMenu()">Produtos</a>
+    <a onclick="closeMobileMenu()">Como Funciona</a>
+    <div class="mobile-menu-divider"></div>
+    <a onclick="showScreen('register'); closeMobileMenu()">Entrar</a>
+    <a onclick="showScreen('register'); closeMobileMenu()">Cadastrar</a>
+    <a onclick="showScreen('dashboard'); closeMobileMenu()">Painel do Produtor</a>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+  <!-- ===================================================
+     SCREEN 1 – LANDING PAGE
+=================================================== -->
+  <div class="screen active" id="screen-landing">
+
+    <!-- HERO -->
+    <section class="hero" id="main-content">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+            </svg>
+            Mais de 200 produtores cadastrados
+          </div>
+          <h1 class="hero-headline">Compre direto do <span>produtor</span></h1>
+          <p class="hero-sub">Alimentos frescos da agricultura familiar e local entregues diretamente para você. Sem
+            intermediários, com mais frescor e preço justo.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" onclick="showScreen('products')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+              Ver Produtos
+            </button>
+            <button class="btn btn-outline btn-lg" style="border-color:#fff;color:#fff;"
+              onmouseover="this.style.background='rgba(255,255,255,.15)'"
+              onmouseout="this.style.background='transparent'" onclick="showScreen('register')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              Sou Produtor
+            </button>
+          </div>
+          <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap;">
+            <div style="color:rgba(255,255,255,.85);font-size:.82rem;">
+              <strong style="color:#fff;font-size:1.3rem;display:block;">1.200+</strong>Produtos frescos
+            </div>
+            <div style="color:rgba(255,255,255,.85);font-size:.82rem;">
+              <strong style="color:#fff;font-size:1.3rem;display:block;">200+</strong>Produtores
+            </div>
+            <div style="color:rgba(255,255,255,.85);font-size:.82rem;">
+              <strong style="color:#fff;font-size:1.3rem;display:block;">4.800+</strong>Clientes satisfeitos
+            </div>
+          </div>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=600&h=450&fit=crop&auto=format" alt="BãoDaFeira" onerror="this.src='https://picsum.photos/seed/feira/600/450'" />
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section" id="how-section">
+      <div class="how-inner">
+        <div class="how-header">
+          <div class="section-tag">Simples assim</div>
+          <h2 class="section-title">Como Funciona</h2>
+          <p class="section-sub">Em apenas 3 passos você conecta o campo à sua mesa</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <h3 class="step-title">Produtor se cadastra</h3>
+            <p class="step-desc">O agricultor cria seu perfil gratuito, cadastra seus produtos frescos com fotos, preços
+              e disponibilidade.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </div>
+            <h3 class="step-title">Consumidor encontra</h3>
+            <p class="step-desc">O cliente navega pelo catálogo, filtra por categoria, localização ou preço e encontra o
+              que precisa.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-icon-wrap">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13" />
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <h3 class="step-title">Combinam a entrega</h3>
+            <p class="step-desc">Produtor e consumidor entram em contato diretamente e combinam a melhor forma de
+              entrega ou retirada.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="benefits-section">
+      <div class="benefits-inner">
+        <div class="benefits-header">
+          <div class="section-tag">Por que escolher?</div>
+          <h2 class="section-title">Vantagens da BãoDaFeira</h2>
+          <p class="section-sub">Benefícios reais para você e para quem cultiva com carinho</p>
+        </div>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h4 class="benefit-title">Fresquinho</h4>
+            <p class="benefit-desc">Produtos colhidos no dia, sem passar por grandes distribuidoras</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <h4 class="benefit-title">Local</h4>
+            <p class="benefit-desc">Apoie a agricultura familiar da sua região e fortaleça a economia local</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23" />
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+            <h4 class="benefit-title">Preço Justo</h4>
+            <p class="benefit-desc">Sem intermediários. O valor vai direto para o agricultor</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            </div>
+            <h4 class="benefit-title">Direto do Campo</h4>
+            <p class="benefit-desc">Conheça a história de quem produziu o seu alimento</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="featured-section">
+      <div class="featured-inner">
+        <div class="featured-header">
+          <div>
+            <div class="section-tag">Em destaque</div>
+            <h2 class="section-title">Produtos Frescos</h2>
+          </div>
+          <button class="btn btn-outline" onclick="showScreen('products')">Ver todos os produtos →</button>
+        </div>
+        <div class="products-grid-6" id="featured-products-grid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+                <path d="M14 3C14 3 5 8 5 16C5 20.418 8.582 24 13 24C13.34 24 13.672 23.977 14 23.934V3Z"
+                  fill="#66BB6A" />
+                <path d="M14 3C14 3 23 8 23 16C23 20.418 19.418 24 15 24C14.66 24 14.328 23.977 14 23.934V3Z"
+                  fill="#ffffff" fill-opacity=".7" />
+              </svg>
+              BãoDaFeira
+            </div>
+            <p>Conectando produtores rurais e consumidores urbanos para um futuro alimentar mais justo e sustentável.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>Plataforma</h4>
+            <ul>
+              <li><a onclick="showScreen('products')">Produtos</a></li>
+              <li><a onclick="showScreen('landing')">Produtores</a></li>
+              <li><a>Como Funciona</a></li>
+              <li><a>Sobre Nós</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Produtor</h4>
+            <ul>
+              <li><a onclick="showScreen('register')">Cadastre-se</a></li>
+              <li><a onclick="showScreen('dashboard')">Painel</a></li>
+              <li><a onclick="showScreen('add-product')">Adicionar Produto</a></li>
+              <li><a>Ajuda</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul>
+              <li><a>contato@feiradigital.com.br</a></li>
+              <li><a>(11) 9 9999-9999</a></li>
+              <li><a>São Paulo, SP</a></li>
+              <li><a>Seg–Sex, 8h–18h</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2025 BãoDaFeira. Todos os direitos reservados.</span>
+          <span>Feito com ♥ para a agricultura familiar</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /screen-landing -->
+
+
+  <!-- ===================================================
+     SCREEN 2 – PRODUCTS PAGE
+=================================================== -->
+  <div class="screen" id="screen-products">
+
+    <div class="products-page-header">
+      <div class="products-page-header-inner">
+        <h1>Nossos Produtos</h1>
+        <div class="search-bar-wrap">
+          <input class="search-input" type="text" placeholder="Buscar produtos, produtores, categorias..."
+            id="search-input" oninput="filterProducts()" />
+          <button class="search-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="products-body">
+      <!-- Botão filtro mobile -->
+      <button class="mobile-filter-btn" id="mobile-filter-btn" onclick="toggleMobileFilters()" aria-expanded="false" aria-controls="products-sidebar-panel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="8" y1="12" x2="20" y2="12"/>
+          <line x1="12" y1="18" x2="20" y2="18"/>
+        </svg>
+        Filtrar produtos
+      </button>
+
+      <!-- Sidebar -->
+      <aside class="products-sidebar" id="products-sidebar-panel">
+        <div class="sidebar-card">
+          <div class="sidebar-title">Categorias</div>
+          <div class="filter-item"><input type="checkbox" id="cat-frutas" checked onchange="filterProducts()"><label
+              for="cat-frutas">Frutas</label><span class="filter-count">4</span></div>
+          <div class="filter-item"><input type="checkbox" id="cat-verduras" checked onchange="filterProducts()"><label
+              for="cat-verduras">Verduras</label><span class="filter-count">3</span></div>
+          <div class="filter-item"><input type="checkbox" id="cat-laticinios" checked onchange="filterProducts()"><label
+              for="cat-laticinios">Laticínios</label><span class="filter-count">2</span></div>
+          <div class="filter-item"><input type="checkbox" id="cat-artesanais" checked onchange="filterProducts()"><label
+              for="cat-artesanais">Artesanais</label><span class="filter-count">2</span></div>
+          <div class="filter-item"><input type="checkbox" id="cat-outros" checked onchange="filterProducts()"><label
+              for="cat-outros">Outros</label><span class="filter-count">2</span></div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-title">Faixa de Preço</div>
+          <div class="price-range-wrap">
+            <input type="range" min="0" max="100" value="100" id="price-range"
+              oninput="updatePriceLabel(this.value); filterProducts()" />
+            <div class="price-labels">
+              <span>R$ 0</span>
+              <span id="price-label">R$ 100</span>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-title">Localização</div>
+          <div class="filter-item"><input type="checkbox" checked><label>Campinas/SP</label></div>
+          <div class="filter-item"><input type="checkbox" checked><label>Indaiatuba/SP</label></div>
+          <div class="filter-item"><input type="checkbox" checked><label>Jundiaí/SP</label></div>
+          <div class="filter-item"><input type="checkbox" checked><label>Atibaia/SP</label></div>
+          <div class="filter-item"><input type="checkbox" checked><label>Mairiporã/SP</label></div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="products-main">
+        <div class="products-toolbar">
+          <span class="products-count" id="products-count">Exibindo 9 produtos</span>
+          <select class="sort-select" onchange="filterProducts()">
+            <option>Mais relevantes</option>
+            <option>Menor preço</option>
+            <option>Maior preço</option>
+            <option>Mais recentes</option>
+          </select>
+        </div>
+        <div class="products-grid-9" id="products-grid">
+          <!-- Filled by JS -->
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer (reused) -->
+    <footer style="margin-top:40px;">
+      <div class="footer-inner">
+        <div class="footer-bottom">
+          <span>© 2025 BãoDaFeira. Todos os direitos reservados.</span>
+          <button class="btn btn-ghost" style="color:var(--gray-400);" onclick="showScreen('landing')">← Voltar ao
+            Início</button>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /screen-products -->
+
+
+  <!-- ===================================================
+     SCREEN 3 – PRODUCT DETAIL
+=================================================== -->
+  <div class="screen" id="screen-detail">
+
+    <div class="product-detail-page">
+      <div class="back-btn" onclick="showScreen('products')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        Voltar para Produtos
+      </div>
+
+      <div class="product-detail-grid">
+        <!-- Left: Image -->
+        <div>
+          <div class="detail-img-wrap">
+            <img id="detail-img" src="" alt="Produto" onerror="this.onerror=null;this.src='https://picsum.photos/seed/produto/600/480'" />
+          </div>
+          <!-- Thumbnails placeholder -->
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <div
+              style="width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid var(--green-light);cursor:pointer;">
+              <img id="detail-thumb-1" src=""
+                style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+            <div
+              style="width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid var(--gray-200);cursor:pointer;">
+              <img id="detail-thumb-2" src=""
+                style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+            <div
+              style="width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid var(--gray-200);cursor:pointer;">
+              <img id="detail-thumb-3" src=""
+                style="width:100%;height:100%;object-fit:cover;" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Info -->
+        <div>
+          <div class="detail-category" id="detail-category">Frutas</div>
+          <h1 class="detail-name" id="detail-name">Tomate Orgânico</h1>
+
+          <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px;">
+            <div class="detail-price" id="detail-price">R$ 8,90</div>
+            <div class="detail-unit-info" id="detail-unit">/kg</div>
+          </div>
+
+          <div class="detail-qty-info">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+              <line x1="12" y1="12" x2="12" y2="12" />
+            </svg>
+            <span id="detail-qty">Disponível: 50 kg</span>
+          </div>
+
+          <p class="detail-desc" id="detail-desc">
+            Tomate orgânico cultivado sem agrotóxicos, colhido na maturação ideal. Rico em licopeno e vitamina C, ideal
+            para saladas, molhos e consumo in natura. Produzido com cuidado e respeito ao meio ambiente na região de
+            Campinas.
+          </p>
+
+          <!-- Producer card -->
+          <div class="producer-card">
+            <div class="producer-avatar">
+              <img src="https://placehold.co/52x52/C8E6C9/2E7D32?text=JS" id="detail-producer-avatar" alt="Produtor" />
+            </div>
+            <div>
+              <div class="producer-info-name" id="detail-producer-name">João Silva</div>
+              <div class="producer-info-loc">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span id="detail-producer-city">Campinas/SP</span>
+              </div>
+              <div class="producer-info-rating">
+                <span class="stars">★★★★★</span>
+                <span style="font-size:.8rem;color:var(--gray-600);">4.9 (38 avaliações)</span>
+              </div>
+            </div>
+            <div style="margin-left:auto;">
+              <span class="badge badge-green">Verificado</span>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="detail-map">
+            <div class="map-icon-wrap">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:.85rem;font-weight:700;color:var(--green-dark);">Localização</div>
+              <div style="font-size:.88rem;color:var(--text-muted);" id="detail-location">Sítio Esperança, Campinas/SP •
+                ~25 km de distância</div>
+            </div>
+          </div>
+
+          <!-- Seletor de quantidade -->
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+            <span style="font-size:.88rem;font-weight:600;color:var(--gray-800);">Quantidade:</span>
+            <div class="qty-control" style="border-color:var(--gray-400);">
+              <button class="qty-btn" onclick="detailChangeQty(-1)" aria-label="Diminuir">−</button>
+              <span class="qty-value" id="detail-qty-input" style="width:44px;">1</span>
+              <button class="qty-btn" onclick="detailChangeQty(+1)" aria-label="Aumentar">+</button>
+            </div>
+            <span style="font-size:.8rem;color:var(--text-muted);" id="detail-unit-tag"></span>
+          </div>
+
+          <!-- Actions -->
+          <div class="detail-actions">
+            <button class="btn btn-whatsapp btn-lg" style="flex:1;"
+              onclick="contactProducerWhatsapp()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+              </svg>
+              Entrar em Contato
+            </button>
+            <button class="btn btn-primary btn-lg" style="flex:1;" id="detail-add-cart-btn"
+              onclick="addToCartFromDetail()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+              Adicionar ao Carrinho
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      <div class="related-section">
+        <div class="divider"></div>
+        <h3 class="related-title">Você também pode gostar</h3>
+        <div class="related-grid" id="related-products-grid">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <footer style="margin-top:40px;">
+      <div class="footer-inner">
+        <div class="footer-bottom">
+          <span>© 2025 BãoDaFeira.</span>
+          <button class="btn btn-ghost" style="color:var(--gray-400);" onclick="showScreen('products')">← Voltar para
+            Produtos</button>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /screen-detail -->
+
+
+  <!-- ===================================================
+     SCREEN 4 – PRODUCER REGISTRATION
+=================================================== -->
+  <div class="screen" id="screen-register">
+
+    <div class="register-page">
+      <div class="register-header">
+        <div class="logo-row">
+          <svg width="30" height="30" viewBox="0 0 28 28" fill="none">
+            <path d="M14 3C14 3 5 8 5 16C5 20.418 8.582 24 13 24C13.34 24 13.672 23.977 14 23.934V3Z" fill="#66BB6A" />
+            <path d="M14 3C14 3 23 8 23 16C23 20.418 19.418 24 15 24C14.66 24 14.328 23.977 14 23.934V3Z"
+              fill="#2E7D32" />
+          </svg>
+          BãoDaFeira
+        </div>
+        <p style="color:var(--text-muted);font-size:.9rem;">Cadastre-se como produtor e alcance milhares de consumidores
+        </p>
+      </div>
+
+      <div class="register-card">
+        <h2>Criar Conta de Produtor</h2>
+        <p class="subtitle">Preencha os dados abaixo para começar a vender</p>
+
+        <form class="register-form" onsubmit="handleRegister(event)">
+
+          <div class="section-divider"><span>Dados Pessoais</span></div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-nome">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Nome completo *
+              </label>
+              <input class="form-input" id="reg-nome" type="text" placeholder="Ex.: João da Silva"
+                autocomplete="name" required aria-required="true"
+                oninput="validateField(this, v => v.trim().length >= 3, 'Digite seu nome completo')" />
+              <span class="form-error" id="err-nome" aria-live="assertive"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-email">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                E-mail *
+              </label>
+              <input class="form-input" id="reg-email" type="email" placeholder="joao@email.com"
+                autocomplete="email" required aria-required="true"
+                oninput="validateField(this, v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), 'Digite um e-mail válido')" />
+              <span class="form-error" id="err-email" aria-live="assertive"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-tel">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.27 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.76-.77a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Telefone / WhatsApp *
+              </label>
+              <input class="form-input" id="reg-tel" type="tel" placeholder="(11) 9 9999-9999"
+                autocomplete="tel" required aria-required="true" maxlength="16"
+                oninput="maskPhone(this); validateField(this, v => v.replace(/\D/g,'').length >= 10, 'Digite um telefone válido')" />
+              <span class="form-error" id="err-tel" aria-live="assertive"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-cpf">CPF</label>
+              <input class="form-input" id="reg-cpf" type="text" placeholder="000.000.000-00"
+                maxlength="14" oninput="maskCPF(this)" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-senha">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Senha *
+              </label>
+              <div class="password-wrap">
+                <input class="form-input" id="reg-senha" type="password" placeholder="Mínimo 8 caracteres"
+                  autocomplete="new-password" required aria-required="true"
+                  oninput="updateStrength(this.value); validateField(this, v => v.length >= 8, 'A senha deve ter pelo menos 8 caracteres')" />
+                <button type="button" class="password-toggle" onclick="togglePassword('reg-senha', this)" aria-label="Mostrar senha">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-eye-off" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+              <div class="password-strength" id="password-strength" style="display:none;">
+                <div class="strength-bars">
+                  <div class="strength-bar" id="sb1"></div>
+                  <div class="strength-bar" id="sb2"></div>
+                  <div class="strength-bar" id="sb3"></div>
+                  <div class="strength-bar" id="sb4"></div>
+                </div>
+                <span class="strength-label" id="strength-label"></span>
+              </div>
+              <span class="form-error" id="err-senha" aria-live="assertive"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="reg-senha2">Confirmar senha *</label>
+              <div class="password-wrap">
+                <input class="form-input" id="reg-senha2" type="password" placeholder="Repita a senha"
+                  autocomplete="new-password" required aria-required="true"
+                  oninput="validateField(this, v => v === document.getElementById('reg-senha').value, 'As senhas não conferem')" />
+                <button type="button" class="password-toggle" onclick="togglePassword('reg-senha2', this)" aria-label="Mostrar confirmação de senha">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-eye-off" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+              <span class="form-error" id="err-senha2" aria-live="assertive"></span>
+            </div>
+          </div>
+
+          <div class="section-divider"><span>Dados da Propriedade</span></div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nome da propriedade *</label>
+              <input class="form-input" type="text" placeholder="Ex.: Sítio Esperança" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cidade / Estado *</label>
+              <input class="form-input" type="text" placeholder="Ex.: Campinas/SP" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Endereço completo</label>
+            <input class="form-input" type="text" placeholder="Rua, número, bairro, CEP" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Tipo de produção *</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item"><input type="checkbox" id="tp-frutas"><label for="tp-frutas">🍎 Frutas</label>
+              </div>
+              <div class="checkbox-item"><input type="checkbox" id="tp-verduras"><label for="tp-verduras">🥬
+                  Verduras</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="tp-laticinios"><label for="tp-laticinios">🧀
+                  Laticínios</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="tp-artesanais"><label for="tp-artesanais">🍯
+                  Artesanais</label></div>
+              <div class="checkbox-item"><input type="checkbox" id="tp-outros"><label for="tp-outros">📦 Outros</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Breve descrição (opcional)</label>
+            <textarea class="form-textarea"
+              placeholder="Conte um pouco sobre sua propriedade e forma de cultivo..."></textarea>
+          </div>
+
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-top:4px;">
+            <input type="checkbox" id="terms"
+              style="margin-top:3px;accent-color:var(--green-dark);width:16px;height:16px;" required />
+            <label for="terms" style="font-size:.82rem;color:var(--text-muted);cursor:pointer;line-height:1.5;">
+              Concordo com os <a style="color:var(--green-dark);font-weight:600;">Termos de Uso</a> e a <a
+                style="color:var(--green-dark);font-weight:600;">Política de Privacidade</a> da BãoDaFeira.
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Criar Conta Gratuitamente
+          </button>
+        </form>
+
+        <div class="login-link-row">
+          Já tem uma conta? <a onclick="showScreen('dashboard')">Fazer login →</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /screen-register -->
+
+
+  <!-- ===================================================
+     SCREEN 5 – PRODUCER DASHBOARD
+=================================================== -->
+  <div class="screen" id="screen-dashboard">
+
+    <div class="dashboard-layout">
+
+      <!-- Sidebar -->
+      <aside class="dashboard-sidebar">
+        <div style="padding:0 8px 16px;border-bottom:1px solid var(--gray-200);margin-bottom:16px;">
+          <div
+            style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-600);margin-bottom:8px;">
+            Menu</div>
+        </div>
+        <nav class="dash-nav">
+          <div class="dash-nav-item active" onclick="setDashSection('products')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Meus Produtos
+          </div>
+          <div class="dash-nav-item" onclick="showScreen('add-product')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="16" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+            </svg>
+            Adicionar Produto
+          </div>
+          <div class="dash-nav-item" onclick="setDashSection('orders')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            Pedidos Recebidos
+            <span class="badge badge-orange" style="margin-left:auto;">3</span>
+          </div>
+          <div class="dash-nav-item" onclick="setDashSection('profile')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Meu Perfil
+          </div>
+          <div class="dash-nav-item" onclick="showScreen('landing')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            Ir para o Site
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <div class="dashboard-content">
+        <!-- Top bar -->
+        <div class="dash-topbar">
+          <div class="dash-topbar-left">
+            <h2 id="dash-section-title">Meus Produtos</h2>
+          </div>
+          <div class="dash-topbar-right">
+            <button class="btn btn-primary btn-sm" onclick="showScreen('add-product')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Novo Produto
+            </button>
+            <div class="user-pill">
+              <div class="user-pill-avatar">
+                <img src="https://placehold.co/34x34/C8E6C9/2E7D32?text=JS" alt="avatar" />
+              </div>
+              <span class="user-pill-name">João Silva</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-body">
+
+          <!-- Stats -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon green">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+              </div>
+              <div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Total de Produtos</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon orange">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                </svg>
+              </div>
+              <div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Pedidos Pendentes</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon blue">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+              </div>
+              <div>
+                <div class="stat-value">87</div>
+                <div class="stat-label">Produtos Vendidos</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6A1B9A" stroke-width="2">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+              </div>
+              <div>
+                <div class="stat-value">4.9</div>
+                <div class="stat-label">Avaliação Média</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Products Section -->
+          <div id="dash-products-section">
+            <div class="dash-section-header">
+              <span class="dash-section-title">Meus Produtos</span>
+              <button class="btn btn-primary btn-sm" onclick="showScreen('add-product')">+ Adicionar Novo
+                Produto</button>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="products-table" id="dash-products-table">
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Qtd.</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-table-body">
+                  <!-- Filled by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Orders Section (hidden by default) -->
+          <div id="dash-orders-section" style="display:none;">
+            <div class="dash-section-header">
+              <span class="dash-section-title">Pedidos Recebidos</span>
+              <span class="badge badge-orange">3 pendentes</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;" id="orders-list">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <!-- Profile Section (hidden by default) -->
+          <div id="dash-profile-section" style="display:none;">
+            <div class="dash-section-header">
+              <span class="dash-section-title">Meu Perfil</span>
+            </div>
+            <div
+              style="background:var(--white);border-radius:var(--radius-md);border:1px solid var(--gray-200);padding:28px;max-width:520px;">
+              <div style="display:flex;align-items:center;gap:18px;margin-bottom:24px;">
+                <div
+                  style="width:72px;height:72px;border-radius:50%;overflow:hidden;border:3px solid var(--green-light);">
+                  <img src="https://placehold.co/72x72/C8E6C9/2E7D32?text=JS"
+                    style="width:100%;height:100%;object-fit:cover;" />
+                </div>
+                <div>
+                  <div style="font-size:1.1rem;font-weight:700;">João Silva</div>
+                  <div style="font-size:.85rem;color:var(--text-muted);">Campinas/SP</div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:4px;"><span class="stars"
+                      style="font-size:.85rem;">★★★★★</span><span
+                      style="font-size:.78rem;color:var(--gray-600);">4.9</span></div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:16px;">
+                <div class="form-group"><label class="form-label">Nome</label><input class="form-input"
+                    value="João da Silva" /></div>
+                <div class="form-group"><label class="form-label">E-mail</label><input class="form-input"
+                    value="joao@sitioesperanca.com.br" /></div>
+                <div class="form-group"><label class="form-label">Telefone</label><input class="form-input"
+                    value="(19) 9 8765-4321" /></div>
+                <div class="form-group"><label class="form-label">Propriedade</label><input class="form-input"
+                    value="Sítio Esperança" /></div>
+                <button class="btn btn-primary" onclick="showToast('Perfil atualizado!','success')">Salvar
+                  Alterações</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /screen-dashboard -->
+
+
+  <!-- ===================================================
+     SCREEN 6 – ADD PRODUCT FORM
+=================================================== -->
+  <div class="screen" id="screen-add-product">
+
+    <div style="max-width:1200px;margin:0 auto;padding:24px;">
+      <div class="back-btn" onclick="showScreen('dashboard')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        Voltar ao Painel
+      </div>
+    </div>
+
+    <div class="add-product-page" style="padding-top:0;">
+      <div class="add-product-card">
+        <div class="add-product-header">
+          <h2>Adicionar Novo Produto</h2>
+          <p>Preencha as informações do seu produto para publicá-lo na plataforma</p>
+        </div>
+
+        <form class="add-product-form" onsubmit="handleAddProduct(event)">
+
+          <!-- Upload Area -->
+          <div class="form-group">
+            <label class="form-label">Foto do Produto *</label>
+            <div class="upload-area" onclick="document.getElementById('file-upload').click()">
+              <div class="upload-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+              </div>
+              <p><strong style="color:var(--green-dark);">Clique para selecionar</strong> ou arraste uma imagem aqui</p>
+              <small>PNG, JPG ou WEBP • Máx. 5MB • Recomendado: 800x600px</small>
+              <input type="file" id="file-upload" accept="image/*" onchange="handleFileSelect(this)" />
+            </div>
+            <div id="upload-preview" style="display:none;margin-top:10px;">
+              <img id="upload-preview-img" src=""
+                style="width:120px;height:90px;object-fit:cover;border-radius:8px;border:2px solid var(--green-light);" />
+              <span id="upload-preview-name"
+                style="font-size:.8rem;color:var(--text-muted);margin-left:10px;vertical-align:middle;"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nome do Produto *</label>
+              <input class="form-input" type="text" placeholder="Ex.: Tomate Orgânico Cereja" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Categoria *</label>
+              <select class="form-select" required>
+                <option value="">Selecione uma categoria</option>
+                <option>Frutas</option>
+                <option>Verduras</option>
+                <option>Laticínios</option>
+                <option>Artesanais</option>
+                <option>Grãos e Cereais</option>
+                <option>Ovos</option>
+                <option>Mel e Derivados</option>
+                <option>Outros</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Preço (R$) *</label>
+              <input class="form-input" type="number" step="0.01" min="0" placeholder="0,00" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Unidade *</label>
+              <select class="form-select" required>
+                <option value="">Selecionar...</option>
+                <option>kg</option>
+                <option>unidade</option>
+                <option>litro</option>
+                <option>bandeja</option>
+                <option>dúzia</option>
+                <option>500g</option>
+                <option>100g</option>
+                <option>maço</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Quantidade disponível *</label>
+              <input class="form-input" type="number" min="1" placeholder="Ex.: 50" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Validade / Disponibilidade</label>
+              <input class="form-input" type="text" placeholder="Ex.: Colhido semanalmente" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Descrição do Produto *</label>
+            <textarea class="form-textarea" style="min-height:130px;"
+              placeholder="Descreva seu produto: como é cultivado, sabor, diferenciais, forma de colheita, certificações..."
+              required></textarea>
+            <span class="form-hint">Uma boa descrição aumenta muito as chances de venda.</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tags (opcional)</label>
+              <input class="form-input" type="text" placeholder="Ex.: orgânico, sem agrotóxico, agroecológico" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status inicial</label>
+              <select class="form-select">
+                <option>Ativo (visível na plataforma)</option>
+                <option>Rascunho (salvar para depois)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="add-product-actions">
+            <button type="button" class="btn btn-ghost" onclick="showScreen('dashboard')">Cancelar</button>
+            <button type="submit" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Publicar Produto
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div><!-- /screen-add-product -->
+
+
+  <!-- ===================================================
+     OVERLAY (fundo escuro do carrinho)
+=================================================== -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+
+  <!-- ===================================================
+     DRAWER DO CARRINHO
+=================================================== -->
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Carrinho de compras">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Meu Carrinho
+        <span class="cart-items-count" id="cart-items-count">0 itens</span>
+      </div>
+      <button class="cart-close-btn" onclick="closeCart()" aria-label="Fechar carrinho">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Lista de itens -->
+    <div class="cart-items-list" id="cart-items-list">
+      <!-- Estado vazio -->
+      <div class="cart-empty" id="cart-empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--gray-400)" stroke-width="1.2">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <p>Seu carrinho está vazio</p>
+        <span>Adicione produtos para continuar</span>
+        <button class="btn btn-outline" style="margin-top:12px;" onclick="closeCart(); showScreen('products')">Ver Produtos</button>
+      </div>
+    </div>
+
+    <!-- Rodapé com total e botão -->
+    <div class="cart-footer" id="cart-footer" style="display:none;">
+      <div class="cart-subtotal-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">R$ 0,00</span>
+      </div>
+      <div class="cart-subtotal-row" style="font-size:.8rem;color:var(--text-muted);">
+        <span>Frete</span>
+        <span>Combinar com produtor</span>
+      </div>
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total">R$ 0,00</span>
+      </div>
+      <button class="btn btn-primary btn-lg" style="width:100%;margin-top:4px;" onclick="goToCheckout()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        </svg>
+        Finalizar Pedido
+      </button>
+      <button class="btn btn-ghost" style="width:100%;margin-top:6px;font-size:.85rem;" onclick="closeCart()">
+        Continuar comprando
+      </button>
+    </div>
+  </aside>
+
+
+  <!-- ===================================================
+     SCREEN 7 – CHECKOUT / PAGAMENTO
+=================================================== -->
+  <div class="screen" id="screen-checkout">
+    <div class="checkout-page">
+
+      <div class="checkout-header">
+        <button class="back-btn" onclick="showScreen('products'); openCart()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Voltar ao carrinho
+        </button>
+        <h1>Finalizar Pedido</h1>
+        <p class="section-sub">Preencha seus dados para confirmar a compra</p>
+      </div>
+
+      <div class="checkout-grid">
+
+        <!-- Coluna esquerda: formulário -->
+        <div class="checkout-form-col">
+
+          <!-- Dados de entrega -->
+          <div class="checkout-card">
+            <div class="checkout-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Dados de Entrega
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="co-nome">Nome completo *</label>
+              <input class="form-input" id="co-nome" type="text" placeholder="Seu nome" autocomplete="name" required />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="co-tel">WhatsApp *</label>
+                <input class="form-input" id="co-tel" type="tel" placeholder="(34) 9 9999-9999"
+                  maxlength="16" oninput="maskPhone(this)" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="co-cep">CEP</label>
+                <input class="form-input" id="co-cep" type="text" placeholder="00000-000" maxlength="9"
+                  oninput="maskCEP(this)" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="co-end">Endereço completo</label>
+              <input class="form-input" id="co-end" type="text" placeholder="Rua, número, bairro" autocomplete="street-address" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="co-obs">Observações (opcional)</label>
+              <textarea class="form-textarea" id="co-obs" placeholder="Ex.: Entregar no portão / ponto de referência..." style="min-height:72px;"></textarea>
+            </div>
+          </div>
+
+          <!-- Forma de pagamento -->
+          <div class="checkout-card" style="margin-top:16px;">
+            <div class="checkout-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+              Forma de Pagamento
+            </div>
+            <div class="payment-options">
+              <label class="payment-option" id="pay-pix">
+                <input type="radio" name="payment" value="pix" checked />
+                <div class="payment-option-body">
+                  <div class="payment-icon pix-icon">PIX</div>
+                  <div>
+                    <div class="payment-name">PIX</div>
+                    <div class="payment-desc">Pagamento imediato</div>
+                  </div>
+                  <svg class="payment-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+              <label class="payment-option" id="pay-whatsapp">
+                <input type="radio" name="payment" value="whatsapp" />
+                <div class="payment-option-body">
+                  <div class="payment-icon wa-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                  </div>
+                  <div>
+                    <div class="payment-name">Combinar pelo WhatsApp</div>
+                    <div class="payment-desc">Fale direto com o produtor</div>
+                  </div>
+                  <svg class="payment-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+              <label class="payment-option" id="pay-dinheiro">
+                <input type="radio" name="payment" value="dinheiro" />
+                <div class="payment-option-body">
+                  <div class="payment-icon cash-icon">R$</div>
+                  <div>
+                    <div class="payment-name">Dinheiro na Entrega</div>
+                    <div class="payment-desc">Pague na retirada ou entrega</div>
+                  </div>
+                  <svg class="payment-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna direita: resumo do pedido -->
+        <div class="checkout-summary-col">
+          <div class="checkout-card checkout-summary-card">
+            <div class="checkout-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+              Resumo do Pedido
+            </div>
+            <div id="checkout-order-items" class="checkout-order-items"></div>
+            <div class="checkout-totals">
+              <div class="checkout-total-row">
+                <span>Subtotal</span>
+                <span id="checkout-subtotal">R$ 0,00</span>
+              </div>
+              <div class="checkout-total-row" style="font-size:.82rem;color:var(--text-muted);">
+                <span>Frete</span>
+                <span>A combinar</span>
+              </div>
+              <div class="checkout-total-row checkout-total-final">
+                <span>Total</span>
+                <span id="checkout-total-final">R$ 0,00</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-lg" style="width:100%;margin-top:16px;" onclick="confirmOrder()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Confirmar Pedido
+            </button>
+            <p style="font-size:.75rem;color:var(--text-muted);text-align:center;margin-top:10px;">
+              🔒 Seus dados estão protegidos
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </aside>
+
+
+  <!-- ===================================================
+     SCREEN 8 – PEDIDO CONFIRMADO
+=================================================== -->
+  <div class="screen" id="screen-order-success">
+    <div class="order-success-page">
+      <div class="order-success-icon">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h1 class="order-success-title">Pedido Realizado!</h1>
+      <p class="order-success-sub">Seu pedido foi enviado com sucesso. O produtor entrará em contato pelo WhatsApp para combinar a entrega.</p>
+      <div class="order-success-code">Pedido <strong id="order-code">#0001</strong></div>
+      <div class="order-success-actions">
+        <button class="btn btn-whatsapp btn-lg" onclick="confirmOrderWhatsapp()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Avisar pelo WhatsApp
+        </button>
+        <button class="btn btn-outline btn-lg" onclick="showScreen('products')">Continuar Comprando</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===================================================
+     BOTÃO WHATSAPP FLUTUANTE
+=================================================== -->
+  <a id="whatsapp-float"
+     href="https://wa.me/5534998187184?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20no%20sistema%20B%C3%A3oDaFeira%20%F0%9F%8C%BF"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="whatsapp-float"
+     aria-label="Falar pelo WhatsApp – Precisa de ajuda?">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+    </svg>
+    <span class="whatsapp-float-tooltip">Precisa de ajuda?</span>
+  </a>
+
+
+  <!-- ===================================================
+     JAVASCRIPT — arquivos externos em js/
+=================================================== -->
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+
+</body>
+
+</html>
